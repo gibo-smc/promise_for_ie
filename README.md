@@ -1,0 +1,2 @@
+# promise_for_ie
+Typescriptで書いたPromiseをIEで動かす
