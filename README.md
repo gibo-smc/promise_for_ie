@@ -32,6 +32,7 @@ typescriptで記述、かつpromiseを使用したソースがIE11で動作す�
 
 ## babel関連
 
+- babel-loader
 - @babel/core
 - @babel/preset-env
 - core-js

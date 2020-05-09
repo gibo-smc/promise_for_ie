@@ -1,6 +1,10 @@
+import 'core-js'
+import 'regenerator-runtime/runtime'
+
 console.log('on load main.js...')
 
 const btnElm = document.getElementById('btn') as HTMLElement
+const btnElm2 = document.getElementById('btn2') as HTMLElement
 const listElm = document.getElementById('list') as HTMLElement
 
 const addMegList = (plusTime: number, currentTime: number): Promise<number> => {
@@ -25,7 +29,7 @@ const addMegList = (plusTime: number, currentTime: number): Promise<number> => {
 
 btnElm.addEventListener('click', () => {
 
-  console.log('on click...')
+  console.log('on click btn...')
 
   addMegList(1, 0)
     .then((currentTime: number) => {
@@ -43,4 +47,19 @@ btnElm.addEventListener('click', () => {
       liElm.appendChild(text)
       listElm.appendChild(liElm)
     })
+})
+
+btnElm2.addEventListener('click', async () => {
+
+  console.log('on click btn2...')
+
+  let currentTime: number = await addMegList(1, 0)
+  currentTime = await addMegList(3, currentTime)
+  currentTime = await addMegList(2, currentTime)
+  currentTime = await addMegList(1, currentTime)
+
+  const liElm = document.createElement('li')
+  const text = document.createTextNode('処理が終了しました')
+  liElm.appendChild(text)
+  listElm.appendChild(liElm)
 })

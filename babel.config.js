@@ -10,8 +10,8 @@ module.exports = (api) => {
         targets: {
           ie: '11'
         },
-        useBuiltIns: 'usage',
-        corejs: 3
+        useBuiltIns: 'entry',
+        corejs: 2
       }
     ]
   ]
