@@ -7,7 +7,15 @@ const btnElm = document.getElementById('btn') as HTMLElement
 const btnElm2 = document.getElementById('btn2') as HTMLElement
 const listElm = document.getElementById('list') as HTMLElement
 
-const addMegList = (plusTime: number, currentTime: number): Promise<number> => {
+const addListElm = (msg: string, containerElm: HTMLElement): void => {
+
+  const liElm = document.createElement('li')
+  const text = document.createTextNode(msg)
+  liElm.appendChild(text)
+  containerElm.appendChild(liElm)
+}
+
+const addMegList = (plusTime: number, currentTime: number, containerElm: HTMLElement): Promise<number> => {
   return new Promise((resolve) => {
 
     setTimeout(() => {
@@ -15,11 +23,8 @@ const addMegList = (plusTime: number, currentTime: number): Promise<number> => {
       // 合計経過時間
       const totalTime: number = currentTime + plusTime
 
-      // 追加するli要素
-      const liElm = document.createElement('li')
-      const text = document.createTextNode(`${plusTime}秒追加され${totalTime}秒経過しました`)
-      liElm.appendChild(text)
-      listElm.appendChild(liElm)
+      // li要素追加
+      addListElm(`${plusTime}秒追加され${totalTime}秒経過しました`, containerElm)
 
       resolve(totalTime)
 
@@ -29,37 +34,31 @@ const addMegList = (plusTime: number, currentTime: number): Promise<number> => {
 
 btnElm.addEventListener('click', () => {
 
-  console.log('on click btn...')
+  addListElm('Promiseで処理を開始しました', listElm)
 
-  addMegList(1, 0)
+  addMegList(1, 0, listElm)
     .then((currentTime: number) => {
-      return addMegList(2, currentTime)
+      return addMegList(0.5, currentTime, listElm)
     })
     .then((currentTime: number) => {
-      return addMegList(1, currentTime)
+      return addMegList(0.3, currentTime, listElm)
     })
     .then((currentTime: number) => {
-      return addMegList(3, currentTime)
+      return addMegList(0.7, currentTime, listElm)
     })
     .then((currentTime: number) => {
-      const liElm = document.createElement('li')
-      const text = document.createTextNode('処理が終了しました')
-      liElm.appendChild(text)
-      listElm.appendChild(liElm)
+      addListElm('処理を終了しました', listElm)
     })
 })
 
 btnElm2.addEventListener('click', async () => {
 
-  console.log('on click btn2...')
+  addListElm('async awaitで処理を開始しました', listElm)
 
-  let currentTime: number = await addMegList(1, 0)
-  currentTime = await addMegList(3, currentTime)
-  currentTime = await addMegList(2, currentTime)
-  currentTime = await addMegList(1, currentTime)
+  let currentTime: number = await addMegList(1, 0, listElm)
+  currentTime = await addMegList(0.2, currentTime, listElm)
+  currentTime = await addMegList(0.3, currentTime, listElm)
+  currentTime = await addMegList(0.5, currentTime, listElm)
 
-  const liElm = document.createElement('li')
-  const text = document.createTextNode('処理が終了しました')
-  liElm.appendChild(text)
-  listElm.appendChild(liElm)
+  addListElm('処理を終了しました', listElm)
 })
